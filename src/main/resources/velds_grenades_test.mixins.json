@@ -1,0 +1,14 @@
+{
+  "required": true,
+  "minVersion": "0.8",
+  "package": "com.veld-dev.velds_grenades_test.mixin",
+  "compatibilityLevel": "JAVA_8",
+  "refmap": "grenades_test.refmap.json",
+  "mixins": [
+  ],
+  "client": [
+  ],
+  "injectors": {
+    "defaultRequire": 1
+  }
+}

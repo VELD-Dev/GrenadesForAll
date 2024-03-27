@@ -1,0 +1,10 @@
+{
+  "smoke_grenade_detonate":
+  {
+    "subtitle": "veldsgrenadetest.subtitle.smoke_grenade_detonate",
+    "sounds":
+    [
+      "veldsgrenadetest:smoke_grenade_detonate_soundfile"
+    ]
+  }
+}
