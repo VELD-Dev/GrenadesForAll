@@ -1,20 +1,18 @@
 package com.velddev.grenades_test;
 
 import com.mojang.logging.LogUtils;
+import com.velddev.grenades_test.Grenades.GrenadeItem;
 import net.minecraft.client.Minecraft;
 import net.minecraft.core.registries.Registries;
-import net.minecraft.data.PackOutput;
-import net.minecraft.world.food.FoodProperties;
-import net.minecraft.world.item.BlockItem;
-import net.minecraft.world.item.CreativeModeTab;
-import net.minecraft.world.item.CreativeModeTabs;
-import net.minecraft.world.item.Item;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.flag.FeatureFlag;
+import net.minecraft.world.flag.FeatureFlagUniverse;
+import net.minecraft.world.item.*;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.material.MapColor;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.common.MinecraftForge;
-import net.minecraftforge.common.data.SoundDefinitionsProvider;
 import net.minecraftforge.event.BuildCreativeModeTabContentsEvent;
 import net.minecraftforge.event.server.ServerStartingEvent;
 import net.minecraftforge.eventbus.api.IEventBus;
@@ -30,39 +28,60 @@ import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.RegistryObject;
 import org.slf4j.Logger;
 
+import javax.swing.text.html.parser.Entity;
+
 @Mod(Main.MODID)
 public class Main
 {
+    private static final Logger LOGGER = LogUtils.getLogger();
     public static final String MODID = "veldsgrenadestest";
     public static final DeferredRegister<Block> BLOCKS = DeferredRegister.create(ForgeRegistries.BLOCKS, MODID);
+    public static final DeferredRegister<Item> ITEMS = DeferredRegister.create(ForgeRegistries.ITEMS, MODID);
+    public static final DeferredRegister<EntityType<?>> ENTITIES = DeferredRegister.create(ForgeRegistries.ENTITY_TYPES, MODID);
+    public static final DeferredRegister<CreativeModeTab> CREATIVE_MODE_TABS = DeferredRegister.create(Registries.CREATIVE_MODE_TAB, MODID);
+    
     public static final RegistryObject<Block> EXAMPLE_BLOCK = BLOCKS.register("example_block",
         () -> new Block(BlockBehaviour.Properties.of().mapColor(MapColor.STONE))
     );
-    public static final DeferredRegister<Item> ITEMS = DeferredRegister.create(ForgeRegistries.ITEMS, MODID);
+    
+    
+    //  ITEMS  //
+    
     public static final RegistryObject<Item> EXAMPLE_BLOCK_ITEM = ITEMS.register("example_block",
         () -> new BlockItem(EXAMPLE_BLOCK.get(), new Item.Properties())
     );
     
-    public static final RegistryObject<Item> EXAMPLE_ITEM = ITEMS.register("example_item",
-        () -> new Item(new Item.Properties()
-            .food(new FoodProperties.Builder()
-                .alwaysEat()
-                .nutrition(1)
-                .saturationMod(2f)
-                .build()
-            ))
+    public static final RegistryObject<Item> SMOKE_GRENADE_ITEM = ITEMS.register("smoke_grenade",
+        () -> new GrenadeItem(
+            new Item.Properties()
+                .defaultDurability(60)
+                .durability(60)
+                .fireResistant()
+                .rarity(Rarity.UNCOMMON)
+                .setNoRepair()
+                .stacksTo(6),
+            new GrenadeItem.Properties()
+                .detonationDamage(0f)
+                .mass(0.539f)
+                .detonationRadius(3.5f)
+                .throwSpeed(15.451f)
+                .detonationSound("")
+        )
     );
-    public static final DeferredRegister<CreativeModeTab> CREATIVE_MODE_TABS = DeferredRegister.create(Registries.CREATIVE_MODE_TAB, MODID);
-    // Creates a creative tab with the id "examplemod:example_tab" for the example item, that is placed after the combat tab
-    public static final RegistryObject<CreativeModeTab> EXAMPLE_TAB = CREATIVE_MODE_TABS.register("example_tab",
+    
+    
+    //  CREATIVE TABS  //
+    
+    public static final RegistryObject<CreativeModeTab> GRENADES_TAB = CREATIVE_MODE_TABS.register("grenades_tab",
         () -> CreativeModeTab.builder().withTabsBefore(CreativeModeTabs.COMBAT)
-            .icon(() -> EXAMPLE_ITEM.get().getDefaultInstance())
+            .icon(() -> SMOKE_GRENADE_ITEM.get().getDefaultInstance())
             .displayItems((parameters, output) ->
-            {
-                output.accept(EXAMPLE_ITEM.get()); // Add the example item to the tab. For your own tabs, this method is preferred over the event
-            }).build()
+                {
+                    output.accept(SMOKE_GRENADE_ITEM.get());
+                    output.accept(EXAMPLE_BLOCK_ITEM.get());
+                }
+            ).build()
     );
-    private static final Logger LOGGER = LogUtils.getLogger();
     
     public Main()
     {

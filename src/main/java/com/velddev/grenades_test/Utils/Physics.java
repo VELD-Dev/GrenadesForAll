@@ -32,7 +32,7 @@ public class Physics
     }
     
     public static double angleForTrajectory(double heightInitial, double heightFinal, double distance, float velocity,
-                                           float gravity)
+                                           double gravity)
     {
         double A = -(gravity * (distance * distance)) / (2 * (velocity * velocity));
         double C = (heightInitial - heightFinal + A);

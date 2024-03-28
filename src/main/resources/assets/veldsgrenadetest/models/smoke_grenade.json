@@ -1,7 +1,7 @@
 {
-	"credit": "Made with Blockbench",
+	"credit": "Made by Greandmalin",
 	"textures": {
-		"0": "block/smoke_grenade_texture"
+		"0": "entities/smoke_grenade_texture"
 	},
 	"elements": [
 		{
