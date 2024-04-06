@@ -6,9 +6,9 @@ modId="${mod_id}" #mandatory
 version="${mod_version}" #mandatory
 displayName="${mod_name}" #mandatory
 #updateJSONURL="https://change.me.example.invalid/updates.json"
-#displayURL="https://change.me.to.your.mods.homepage.example.invalid/"
+displayURL="https://github.com/VLED-Dev/GrenadesForAll"
 #logoFile="velds_grandoes_test.png"
-#credits="Thanks for this example mod goes to Java"
+credits="Thanks to Greandmalin for most of the models."
 authors="${mod_authors}"
 # Display Test controls the display for your mod in the server connection screen
 # MATCH_VERSION means that your mod will cause a red X if the versions on client and server differ. This is the default behaviour and should be what you choose if you have server and client elements to your mod.
